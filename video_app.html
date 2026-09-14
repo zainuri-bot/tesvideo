@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cux Image-to-Video Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans antialiased">
+
+    <div class="max-w-3xl mx-auto px-4 py-10">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-extrabold text-white">🎬 AI Image-to-Video Studio</h1>
+            <p class="text-slate-400 text-sm mt-1">Unggah gambar Anda dan ubah menjadi video dinamis menggunakan AI.</p>
+        </header>
+
+        <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 shadow-xl backdrop-blur-md space-y-6">
+            
+            <!-- Upload Area -->
+            <div>
+                <label class="block text-xs font-medium text-slate-300 uppercase mb-2">1. Unggah Gambar Sumber</label>
+                <div class="border-2 border-dashed border-slate-700 rounded-xl p-6 text-center hover:border-indigo-500 transition cursor-pointer" onclick="document.getElementById('imageFile').click()">
+                    <span class="text-3xl">📁</span>
+                    <p class="text-sm text-slate-300 mt-2" id="fileName">Klik atau seret gambar ke sini (JPG/PNG)</p>
+                    <input type="file" id="imageFile" accept="image/*" class="hidden" onchange="previewImage(event)">
+                </div>
+            </div>
+
+            <!-- Image Preview -->
+            <div id="previewContainer" class="hidden text-center">
+                <p class="text-xs text-slate-400 mb-2">Pratinjau Gambar:</p>
+                <img id="imgPreview" class="max-h-48 mx-auto rounded-lg border border-slate-700 shadow-md">
+            </div>
+
+            <!-- Prompt Gerakan Video -->
+            <div>
+                <label class="block text-xs font-medium text-slate-300 uppercase mb-1">2. Deskripsikan Gerakan Video (Prompt)</label>
+                <textarea id="videoPrompt" rows="3" placeholder="Contoh: Kamera bergerak perlahan mendekat (zoom in), angin bertiup menerpa rambut karakter, sinematik 4k..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+            </div>
+
+            <!-- Tombol Generate -->
+            <button onclick="generateVideo()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl shadow-lg transition duration-200 flex items-center justify-center gap-2">
+                <span>✨ Proses Menjadi Video</span>
+            </button>
+
+            <!-- Status Proses -->
+            <div id="statusBox" class="hidden bg-slate-900 border border-slate-700 rounded-xl p-4 text-center">
+                <p class="text-sm text-indigo-400 animate-pulse">⏳ Sedang merender video dengan AI... Mohon tunggu sebentar.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('fileName').innerText = file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imgPreview').src = e.target.result;
+                    document.getElementById('previewContainer').classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function generateVideo() {
+            const fileInput = document.getElementById('imageFile').value;
+            const prompt = document.getElementById('videoPrompt').value;
+
+            if (!fileInput) {
+                alert('Harap unggah gambar terlebih dahulu!');
+                return;
+            }
+
+            // Tampilkan status loading
+            document.getElementById('statusBox').classList.remove('hidden');
+
+            // Simulasi proses API (Di sini Anda nanti menyambungkan kode ke Backend API Veo / Replicate)
+            setTimeout(() => {
+                document.getElementById('statusBox').innerHTML = `
+                    <p class="text-sm text-emerald-400 font-bold mb-2">🎉 Video Berhasil Dibuat!</p>
+                    <p class="text-xs text-slate-400">*(Contoh simulasi: Sambungkan kode ini ke API backend untuk merender video asli)*</p>
+                `;
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
